@@ -1,0 +1,62 @@
+table directors
+	lineageTag: 179e9c99-53de-4790-a248-6dc577c5c36a
+
+	column name
+		dataType: string
+		lineageTag: 4cc1a44b-b7e0-4c02-b838-198b2629e738
+		summarizeBy: none
+		sourceColumn: name
+
+		annotation SummarizationSetBy = Automatic
+
+	column director_id
+		dataType: double
+		lineageTag: 1ff24a7a-40c2-477d-9e67-316c477998a6
+		summarizeBy: sum
+		sourceColumn: director_id
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column gender
+		dataType: double
+		lineageTag: 94b6cf1e-ff88-49b2-bc56-4fa38f409f81
+		summarizeBy: sum
+		sourceColumn: gender
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column director_popularity
+		dataType: double
+		lineageTag: 470c17a7-ab94-46ee-9d33-c4da051fb0c2
+		summarizeBy: sum
+		sourceColumn: director_popularity
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column media_type_id
+		dataType: string
+		lineageTag: 4fdc0659-c8d1-4ef7-88e2-b5a9cd280c27
+		summarizeBy: none
+		sourceColumn: media_type_id
+
+		annotation SummarizationSetBy = Automatic
+
+	partition directors = m
+		mode: import
+		source =
+				let
+				  Source = PostgreSQL.Database("localhost:5432", "social_dash_db"),
+				  #"Navigation 1" = Source{[Schema = "public", Item = "directors"]}[Data]
+				in
+				  #"Navigation 1"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

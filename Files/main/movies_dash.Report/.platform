@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "movies_dash"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "b3593d84-8d97-4c14-8d86-e6d59db6311d"
+  }
+}

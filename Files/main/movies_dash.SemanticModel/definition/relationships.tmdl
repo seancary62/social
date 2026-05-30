@@ -1,0 +1,16 @@
+relationship a586c16a-aa06-5c08-48f0-9465cbdb045a
+	fromColumn: media_all.genre_ids
+	toColumn: genres.id
+
+relationship a1e8600d-75db-8c7d-4a4c-d89bde3e2711
+	fromColumn: studios.media_type_id
+	toColumn: media_all.media_type_id
+
+relationship 8c762875-0867-c1c2-c4de-43dd99f4ec75
+	fromColumn: directors.media_type_id
+	toColumn: media_all.media_type_id
+
+relationship 4c5ec667-125c-367b-5874-392b33e1db6c
+	fromColumn: actors.media_type_id
+	toColumn: media_all.media_type_id
+
