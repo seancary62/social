@@ -22,6 +22,7 @@ table studios
 	column origin_country
 		dataType: string
 		lineageTag: b9d4766f-b363-483d-9fec-1c0bbafa9345
+		dataCategory: Country
 		summarizeBy: none
 		sourceColumn: origin_country
 
@@ -32,6 +33,14 @@ table studios
 		lineageTag: 9fabd75d-c3ff-447e-9733-a19654f2df23
 		summarizeBy: none
 		sourceColumn: media_type_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column logo_path
+		dataType: string
+		lineageTag: 6f450054-626f-422d-869d-2adc6f85035e
+		summarizeBy: none
+		sourceColumn: logo_path
 
 		annotation SummarizationSetBy = Automatic
 

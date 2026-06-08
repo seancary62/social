@@ -8,7 +8,7 @@ model Model
 
 annotation __PBI_TimeIntelligenceEnabled = 1
 
-annotation PBI_QueryOrder = ["actors","directors","genres","media_all","studios"]
+annotation PBI_QueryOrder = ["actors","directors","genres","media_all","studios","StartYear","EndYear","Calendar_Table"]
 
 annotation PBI_ProTooling = ["DevMode"]
 
@@ -17,6 +17,14 @@ ref table directors
 ref table genres
 ref table media_all
 ref table studios
+ref table Parameter_Media_Metric
+ref table DateTableTemplate_c3754584-fefb-486e-b53e-f21f0a1d1bcf
+ref table Calendar_Table
+ref table LocalDateTable_910bca64-283e-4ecb-b005-b2607b8a6046
+ref table LocalDateTable_35c7ba92-e70b-407c-9790-c83156ee1858
+ref table LocalDateTable_2c720db7-94c1-4bd9-9487-058d59c01eac
+ref table Parameter_Period
+ref table LocalDateTable_0f4e7665-b7b8-4fa9-ad68-ac1217b13c0c
 
 ref cultureInfo en-US
 

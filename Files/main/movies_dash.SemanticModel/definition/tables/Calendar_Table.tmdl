@@ -1,0 +1,194 @@
+table Calendar_Table
+	lineageTag: 70a46b22-0c17-4be6-b725-266da98a9fbb
+
+	column FullDateAlternateKey
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: d79707fb-3cd3-4009-aac6-fcac8d9d70c0
+		summarizeBy: none
+		sourceColumn: FullDateAlternateKey
+
+		variation Variation
+			isDefault
+			relationship: 7c87b031-af91-4c0d-88f0-74bb01e0f3ec
+			defaultHierarchy: LocalDateTable_910bca64-283e-4ecb-b005-b2607b8a6046.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Year
+		dataType: double
+		lineageTag: 98d301e6-015f-4200-8bb4-565fc733c836
+		summarizeBy: sum
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Month
+		dataType: double
+		lineageTag: 13738dd3-735a-4d17-95ef-11ebd0f4b882
+		summarizeBy: sum
+		sourceColumn: Month
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Month Name'
+		dataType: string
+		lineageTag: 07b044e4-8383-4592-9fee-850e273d618a
+		summarizeBy: none
+		sourceColumn: Month Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quarter
+		dataType: double
+		lineageTag: 6b314312-899b-4d7b-8388-4d58e6d7d494
+		summarizeBy: sum
+		sourceColumn: Quarter
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Week of Year'
+		dataType: double
+		lineageTag: 04cf0247-34c9-43b0-ac68-3f9fc98f1cb7
+		summarizeBy: sum
+		sourceColumn: Week of Year
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Week of Month'
+		dataType: double
+		lineageTag: 4f89bd8c-5183-4f82-8048-ec2f2ba7265c
+		summarizeBy: sum
+		sourceColumn: Week of Month
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Day
+		dataType: double
+		lineageTag: 52c2cceb-e27a-4961-b768-f4fdb3d1e687
+		summarizeBy: sum
+		sourceColumn: Day
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Day of Week'
+		dataType: double
+		lineageTag: 71c57b7c-e4a7-436a-9a2b-fe7d65468d41
+		summarizeBy: sum
+		sourceColumn: Day of Week
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Day of Year'
+		dataType: double
+		lineageTag: cf12eec5-3c59-401e-9483-743a201ef9f7
+		summarizeBy: sum
+		sourceColumn: Day of Year
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Day Name'
+		dataType: string
+		lineageTag: 00941c99-3922-495b-a2b3-c4e0cba130b2
+		summarizeBy: none
+		sourceColumn: Day Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Start of Month'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 1203baf6-a707-42e1-ad57-07a6a099e71c
+		summarizeBy: none
+		sourceColumn: Start of Month
+
+		variation Variation
+			isDefault
+			relationship: 114b181c-a7c9-4831-aa36-fd79327ccacf
+			defaultHierarchy: LocalDateTable_35c7ba92-e70b-407c-9790-c83156ee1858.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'End of Week'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 09665411-15af-40f9-b3b3-b9d8e51cee14
+		summarizeBy: none
+		sourceColumn: End of Week
+
+		variation Variation
+			isDefault
+			relationship: 186408c9-58b5-4fad-9ebf-87424d6c5e83
+			defaultHierarchy: LocalDateTable_2c720db7-94c1-4bd9-9487-058d59c01eac.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Start of Year'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 41203ddc-5de9-4b72-b624-a8d967cd474f
+		summarizeBy: none
+		sourceColumn: Start of Year
+
+		variation Variation
+			isDefault
+			relationship: 34d02de1-5d8f-43cf-864a-1b9ebfade074
+			defaultHierarchy: LocalDateTable_0f4e7665-b7b8-4fa9-ad68-ac1217b13c0c.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition Calendar_Table = m
+		mode: import
+		source =
+				let
+				    StartDate = #date(StartYear,1,1),
+				    EndDate = #date(EndYear,12,31),
+				    NumberOfDays = Duration.Days( EndDate - StartDate ),
+				    Dates = List.Dates(StartDate, NumberOfDays+1, #duration(1,0,0,0)),
+				    #"Converted to Table" = Table.FromList(Dates, Splitter.SplitByNothing(), null, null, ExtraValues.Error),
+				    #"Renamed Columns" = Table.RenameColumns(#"Converted to Table",{{"Column1", "FullDateAlternateKey"}}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Renamed Columns",{{"FullDateAlternateKey", type date}}),
+				    #"Inserted Year" = Table.AddColumn(#"Changed Type", "Year", each Date.Year([FullDateAlternateKey]), type number),
+				    #"Inserted Month" = Table.AddColumn(#"Inserted Year", "Month", each Date.Month([FullDateAlternateKey]), type number),
+				    #"Inserted Month Name" = Table.AddColumn(#"Inserted Month", "Month Name", each Date.MonthName([FullDateAlternateKey]), type text),
+				    #"Inserted Quarter" = Table.AddColumn(#"Inserted Month Name", "Quarter", each Date.QuarterOfYear([FullDateAlternateKey]), type number),
+				    #"Inserted Week of Year" = Table.AddColumn(#"Inserted Quarter", "Week of Year", each Date.WeekOfYear([FullDateAlternateKey]), type number),
+				    #"Inserted Week of Month" = Table.AddColumn(#"Inserted Week of Year", "Week of Month", each Date.WeekOfMonth([FullDateAlternateKey]), type number),
+				    #"Inserted Day" = Table.AddColumn(#"Inserted Week of Month", "Day", each Date.Day([FullDateAlternateKey]), type number),
+				    #"Inserted Day of Week" = Table.AddColumn(#"Inserted Day", "Day of Week", each Date.DayOfWeek([FullDateAlternateKey]), type number),
+				    #"Inserted Day of Year" = Table.AddColumn(#"Inserted Day of Week", "Day of Year", each Date.DayOfYear([FullDateAlternateKey]), type number),
+				    #"Inserted Day Name" = Table.AddColumn(#"Inserted Day of Year", "Day Name", each Date.DayOfWeekName([FullDateAlternateKey]), type text),
+				    #"Inserted Start of Month" = Table.AddColumn(#"Inserted Day Name", "Start of Month", each Date.StartOfMonth([FullDateAlternateKey]), type date),
+				    #"Inserted End of Week" = Table.AddColumn(#"Inserted Start of Month", "End of Week", each Date.EndOfWeek([FullDateAlternateKey]), type date),
+				    #"Inserted Start of Year" = Table.AddColumn(#"Inserted End of Week", "Start of Year", each Date.StartOfYear([FullDateAlternateKey]), type date)
+				in
+				    #"Inserted Start of Year"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

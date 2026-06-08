@@ -1,0 +1,14 @@
+expression StartYear = 1950 meta [IsParameterQuery=true, Type="Any", IsParameterQueryRequired=true]
+	lineageTag: 81dcf8d1-fef0-4ff4-8bed-007ddf41ec16
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Number
+
+expression EndYear = 2028 meta [IsParameterQuery=true, Type="Any", IsParameterQueryRequired=true]
+	lineageTag: 73e1e4b5-335e-4529-b48d-8ad4f1a7b3dd
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Number
+

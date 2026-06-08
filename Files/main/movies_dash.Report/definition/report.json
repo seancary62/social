@@ -9,6 +9,15 @@
         "page": "2.3.1"
       },
       "type": "SharedResources"
+    },
+    "customTheme": {
+      "name": "Temperature",
+      "reportVersionAtImport": {
+        "visual": "2.9.0",
+        "report": "3.3.0",
+        "page": "2.3.1"
+      },
+      "type": "SharedResources"
     }
   },
   "objects": {
@@ -24,8 +33,26 @@
           }
         }
       }
+    ],
+    "outspacePane": [
+      {
+        "properties": {
+          "expanded": {
+            "expr": {
+              "Literal": {
+                "Value": "false"
+              }
+            }
+          }
+        }
+      }
     ]
   },
+  "publicCustomVisuals": [
+    "WordCloud1447959067750",
+    "ImageCarouselByMAQSoftware1448688110701",
+    "threejsE0E480FFE18F46FE90AD2FA3A0D80C5F"
+  ],
   "resourcePackages": [
     {
       "name": "SharedResources",
@@ -35,6 +62,11 @@
           "name": "CY26SU05",
           "path": "BaseThemes/CY26SU05.json",
           "type": "BaseTheme"
+        },
+        {
+          "name": "Temperature",
+          "path": "BuiltInThemes/Temperature.json",
+          "type": "CustomTheme"
         }
       ]
     }

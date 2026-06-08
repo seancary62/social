@@ -1,0 +1,50 @@
+table Parameter_Period
+	lineageTag: 8b88f31a-cb7b-42c1-92ba-f9dffd79824e
+
+	column Parameter_Period
+		lineageTag: a56bd8a5-25c0-4a37-a8ed-cfca5e8c557f
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'Parameter_Period Order'
+
+		relatedColumnDetails
+			groupByColumn: 'Parameter_Period Fields'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Parameter_Period Fields'
+		isHidden
+		lineageTag: 1662303b-0121-489a-b836-04ad87f86ec9
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'Parameter_Period Order'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Parameter_Period Order'
+		isHidden
+		formatString: 0
+		lineageTag: b0df1667-943e-4b9c-aa4b-5961218ca81b
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Parameter_Period = calculated
+		mode: import
+		source =
+				{
+				    ("Release Date", NAMEOF('Calendar_Table'[FullDateAlternateKey]), 0),
+				    ("Release Week", NAMEOF('Calendar_Table'[End of Week]), 1),
+				    ("Release Month", NAMEOF('Calendar_Table'[Start of Month]), 2),
+				    ("Release Year", NAMEOF('Calendar_Table'[Start of Year]), 3)
+				}
+
+	annotation PBI_Id = 52f46b55ef77410a97cc416b5eedc9e6
+

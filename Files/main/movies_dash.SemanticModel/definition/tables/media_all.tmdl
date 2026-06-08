@@ -1,6 +1,30 @@
 table media_all
 	lineageTag: 3722d6ea-7495-4cfa-ae4d-15684e2d2f6d
 
+	measure 'sum popularity' = sum(media_all[popularity])
+		lineageTag: 615bc4f2-792e-4fcf-8e87-059a28ad20cf
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'vote average' = AVERAGE(media_all[vote_average])
+		lineageTag: 8984b48e-5747-4d0f-a183-01e8f6aff2a6
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'average popularity' = AVERAGE(media_all[popularity])
+		lineageTag: bfe7277f-aa99-43e7-a562-c63670858d92
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'average vote count' = AVERAGE(media_all[vote_count])
+		lineageTag: 538fd209-1207-4a7d-a06a-ab193ae91d9b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'sum vote count' = SUM(media_all[vote_count])
+		formatString: 0
+		lineageTag: 56fe91b5-6aa0-437b-904d-98b6e4f93f70
+
 	column backdrop_path
 		dataType: string
 		lineageTag: 67cb56df-1b23-40b8-a095-a32b7d0c74b1
@@ -168,6 +192,51 @@ table media_all
 
 		annotation SummarizationSetBy = Automatic
 
+	column poster_path_full
+		dataType: string
+		lineageTag: 81734de0-0e10-47d9-94ce-582cc1529a56
+		dataCategory: ImageUrl
+		summarizeBy: none
+		sourceColumn: poster_path_full
+
+		annotation SummarizationSetBy = Automatic
+
+	column genres
+		dataType: string
+		lineageTag: 209389ee-0cdd-4c71-82a4-a8d25a035390
+		summarizeBy: none
+		sourceColumn: genres
+
+		annotation SummarizationSetBy = Automatic
+
+	column title_name
+		dataType: string
+		lineageTag: 66bf53de-ba8f-4646-a6b4-d253d84f7cae
+		summarizeBy: none
+		sourceColumn: title_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Popularity Rank'
+		dataType: int64
+		formatString: 0
+		lineageTag: 15c8a638-9ff5-4f99-8f67-7c4d4f1661e3
+		summarizeBy: sum
+		sourceColumn: Popularity Rank
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Date of Release'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: b1703efe-c158-4503-88af-59e316b7a93d
+		summarizeBy: none
+		sourceColumn: Date of Release
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
 	partition media_all = m
 		mode: import
 		source =
@@ -176,9 +245,17 @@ table media_all
 				  #"Navigation 1" = Source{[Schema = "public", Item = "media_all"]}[Data],
 				    #"Sorted Rows" = Table.Sort(#"Navigation 1",{{"media_type_id", Order.Ascending}}),
 				    #"Removed Duplicates" = Table.Distinct(#"Sorted Rows"),
-				    #"Removed Duplicates1" = Table.Distinct(#"Removed Duplicates", {"title", "media_type_id"})
+				    #"Removed Duplicates1" = Table.Distinct(#"Removed Duplicates", {"title", "media_type_id"}),
+				    #"Added Conditional Column" = Table.AddColumn(#"Removed Duplicates1", "title_name", each if [title] = null then [name] else [title]),
+				    #"Sorted Rows1" = Table.Sort(#"Added Conditional Column",{{"popularity", Order.Descending}}),
+				    #"Added Index" = Table.AddIndexColumn(#"Sorted Rows1", "Popularity Rank", 1, 1, Int64.Type),
+				    #"Extracted Text Between Delimiters" = Table.TransformColumns(#"Added Index", {{"genres", each Text.BetweenDelimiters(_, "{", "}"), type text}}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Extracted Text Between Delimiters"," ","_",Replacer.ReplaceText,{"genres"}),
+				    #"Added Conditional Column1" = Table.AddColumn(#"Replaced Value", "Date of Release", each if [release_date] = null then [first_air_date] else [release_date]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Added Conditional Column1",{{"Date of Release", type date}}),
+				    #"Sorted Rows2" = Table.Sort(#"Changed Type",{{"Date of Release", Order.Ascending}})
 				in
-				  #"Removed Duplicates1"
+				  #"Sorted Rows2"
 
 	annotation PBI_ResultType = Table
 

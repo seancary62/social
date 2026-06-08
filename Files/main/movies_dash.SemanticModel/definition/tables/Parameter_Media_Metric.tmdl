@@ -1,0 +1,49 @@
+table Parameter_Media_Metric
+	lineageTag: d35b07ba-8f95-4309-a1c1-61830256da32
+
+	column Parameter_Media_Metric
+		lineageTag: c7a8468c-915c-4246-86d3-1d8870feb2dd
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'Parameter_Media_Metric Order'
+
+		relatedColumnDetails
+			groupByColumn: 'Parameter_Media_Metric Fields'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Parameter_Media_Metric Fields'
+		isHidden
+		lineageTag: 3db496ee-6b21-4514-b97e-5b42eed8f26d
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'Parameter_Media_Metric Order'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Parameter_Media_Metric Order'
+		isHidden
+		formatString: 0
+		lineageTag: 180658f5-8664-4e55-a362-2bcd6426824d
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Parameter_Media_Metric = calculated
+		mode: import
+		source =
+				{
+				    ("Vote Count", NAMEOF('media_all'[sum vote count]), 0),
+				    ("Popularity", NAMEOF('media_all'[sum popularity]), 1),
+				    ("Vote Average", NAMEOF('media_all'[vote average]), 2)
+				}
+
+	annotation PBI_Id = f8fadd237019490d9cd9446769fe0f23
+

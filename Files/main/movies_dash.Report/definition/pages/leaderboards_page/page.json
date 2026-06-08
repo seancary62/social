@@ -1,0 +1,25 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "leaderboards_page",
+  "displayName": "Leaderboards",
+  "displayOption": "FitToPage",
+  "height": 720,
+  "width": 1280,
+  "visualInteractions": [
+    {
+      "source": "e19e6d65405567c2eb1c",
+      "target": "88f6c36d4b67cc3e680b",
+      "type": "DataFilter"
+    },
+    {
+      "source": "1522bb9a3041e205310c",
+      "target": "e19e6d65405567c2eb1c",
+      "type": "DataFilter"
+    },
+    {
+      "source": "1522bb9a3041e205310c",
+      "target": "88f6c36d4b67cc3e680b",
+      "type": "DataFilter"
+    }
+  ]
+}
